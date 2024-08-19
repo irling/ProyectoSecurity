@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_light"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="HERRAMIENTAS PARA INVESTIGAR"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvGetUbi"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:cardBackgroundColor="@color/blue_dark"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/cvGetSMS"
+        app:layout_constraintEnd_toStartOf="@+id/cvGetContact"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ubicación"
+                android:textAllCaps="true"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <Button
+                android:layout_width="130dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/gray_dark"
+                android:text="VER"
+                android:textSize="15sp"
+                android:textColor="@color/white" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvGetContact"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:cardBackgroundColor="@color/blue_dark"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/cvGetGaleria"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cvGetUbi"
+        app:layout_constraintTop_toTopOf="parent">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contactos"
+                android:textAllCaps="true"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <Button
+                android:layout_width="130dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/gray_dark"
+                android:text="VER"
+                android:textSize="15sp"
+                android:textColor="@color/white" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvGetSMS"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:cardBackgroundColor="@color/blue_dark"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cvGetGaleria"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cvGetUbi">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SMS"
+                android:textAllCaps="true"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <Button
+                android:layout_width="130dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/gray_dark"
+                android:text="VER"
+                android:textSize="15sp"
+                android:textColor="@color/white" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvGetGaleria"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:cardBackgroundColor="@color/blue_dark"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cvGetSMS"
+        app:layout_constraintTop_toBottomOf="@+id/cvGetContact">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GALERIA"
+                android:textAllCaps="true"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <Button
+                android:layout_width="130dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/gray_dark"
+                android:text="VER"
+                android:textSize="15sp"
+                android:textColor="@color/white" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
