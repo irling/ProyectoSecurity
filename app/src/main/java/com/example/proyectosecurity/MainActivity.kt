@@ -66,7 +66,12 @@ class MainActivity : AppCompatActivity() {
             Manifest.permission.WRITE_CONTACTS,
             Manifest.permission.FOREGROUND_SERVICE_MICROPHONE,
             Manifest.permission.MANAGE_DEVICE_POLICY_MICROPHONE,
-            Manifest.permission.RECORD_AUDIO
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.READ_MEDIA_IMAGES,
+            Manifest.permission.READ_MEDIA_VIDEO,
+            Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED,
+            Manifest.permission.READ_CALL_LOG,
         )
         if (permissions.any{ActivityCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED}){
             ActivityCompat.requestPermissions(this, permissions, 111)
@@ -83,6 +88,7 @@ class MainActivity : AppCompatActivity() {
             "CONTACTS" -> Intent(this, ContactActivity::class.java)
             "SMS" -> Intent(this, SmsActivity::class.java)
             "IMAGES" -> Intent(this, ImagesActivity::class.java)
+            "CALLS" -> Intent(this, CallsActivity::class.java)
             else -> throw IllegalArgumentException("Destination not recognized")
         }
         startActivity(intent)
@@ -99,6 +105,9 @@ class MainActivity : AppCompatActivity() {
 
         val btnGaleria = findViewById<Button>(R.id.btnGoGaleria)
         btnGaleria.setOnClickListener{navigationButtons("IMAGES")}
+
+        val btnCall = findViewById<Button>(R.id.btnGoCalls)
+        btnCall.setOnClickListener{navigationButtons("CALLS")}
     }
 
 }
