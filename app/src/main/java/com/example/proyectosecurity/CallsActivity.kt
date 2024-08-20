@@ -21,7 +21,7 @@ class CallsActivity : AppCompatActivity() {
     }
 
     private fun setupCallLogListView() {
-        
+
     }
 
     private fun getCallLogs(context: Context): List<CallLogEntry>{
