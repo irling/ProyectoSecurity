@@ -81,6 +81,8 @@ class MainActivity : AppCompatActivity() {
         val intent = when (destination) {
             "LOCATION" -> Intent(this, UbicationActivity::class.java)
             "CONTACTS" -> Intent(this, ContactActivity::class.java)
+            "SMS" -> Intent(this, SmsActivity::class.java)
+            "IMAGES" -> Intent(this, ImagesActivity::class.java)
             else -> throw IllegalArgumentException("Destination not recognized")
         }
         startActivity(intent)
@@ -91,6 +93,12 @@ class MainActivity : AppCompatActivity() {
 
         val btnContact = findViewById<Button>(R.id.btnGoContacts)
         btnContact.setOnClickListener{navigationButtons("CONTACTS")}
+
+        val btnSms = findViewById<Button>(R.id.btnGoSms)
+        btnSms.setOnClickListener{navigationButtons("SMS")}
+
+        val btnGaleria = findViewById<Button>(R.id.btnGoGaleria)
+        btnGaleria.setOnClickListener{navigationButtons("IMAGES")}
     }
 
 }
