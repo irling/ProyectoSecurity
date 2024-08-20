@@ -10,9 +10,14 @@ import androidx.core.view.WindowInsetsCompat
 import android.Manifest
 import android.content.Intent
 import android.hardware.camera2.TotalCaptureResult
+import android.health.connect.datatypes.ExerciseRoute.Location
+import android.os.Build
+import android.widget.Button
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 
 class MainActivity : AppCompatActivity() {
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -22,6 +27,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        FuncionalitiesButtons ()
         requestPermissions()
     }
 
@@ -45,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     private fun requestPermissions(){
         val permissions = arrayOf(
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -56,6 +62,11 @@ class MainActivity : AppCompatActivity() {
             Manifest.permission.CAMERA,
             Manifest.permission.CALL_PHONE,
             Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.READ_CONTACTS,
+            Manifest.permission.WRITE_CONTACTS,
+            Manifest.permission.FOREGROUND_SERVICE_MICROPHONE,
+            Manifest.permission.MANAGE_DEVICE_POLICY_MICROPHONE,
+            Manifest.permission.RECORD_AUDIO
         )
         if (permissions.any{ActivityCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED}){
             ActivityCompat.requestPermissions(this, permissions, 111)
@@ -64,11 +75,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //==============COMODIDAD PARA VER LOS RESULTADO =====================
+    // NAVEGACION DENTRO DE LA APP
+    private fun navigationButtons (destination: String){
+        val intent = when (destination) {
+            "LOCATION" -> Intent(this, UbicationActivity::class.java)
+            "CONTACTS" -> Intent(this, ContactActivity::class.java)
+            else -> throw IllegalArgumentException("Destination not recognized")
+        }
+        startActivity(intent)
+    }
+    private fun FuncionalitiesButtons (){
+        val btnLocation = findViewById<Button>(R.id.btnGoLocation)
+        btnLocation.setOnClickListener{navigationButtons ("LOCATION")}
 
-//    private fun launcUbicationAct() {
-//        val intent = Intent(this, UbicationActivity::class.java)
-//        startActivity(intent)
-//    }
-
+        val btnContact = findViewById<Button>(R.id.btnGoContacts)
+        btnContact.setOnClickListener{navigationButtons("CONTACTS")}
+    }
 
 }
