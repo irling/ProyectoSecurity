@@ -25,6 +25,9 @@
         android:theme="@style/Theme.ProyectoSecurity"
         tools:targetApi="31">
         <activity
+            android:name=".ContactActivity"
+            android:exported="false" />
+        <activity
             android:name=".UbicationActivity"
             android:exported="false" />
         <activity
