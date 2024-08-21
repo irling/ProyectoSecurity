@@ -17,9 +17,10 @@ class CallLogAdapter (context: Context, private val callLogs: List<CallLogEntry>
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.activity_calls, parent, false)
 
+        //OBTENEMOS LA ID DEL .XML ====== EN EL itemTemplate le damos la caracteristica de "visibility"
+        //para que se pueda visualizar en la listView.
         val itemTemplate = view.findViewById<LinearLayout>(R.id.listItemTemplate)
         itemTemplate.visibility = View.VISIBLE
-
         val tvNumber = itemTemplate.findViewById<TextView>(R.id.tvNumber)
         val tvType = itemTemplate.findViewById<TextView>(R.id.tvType)
         val tvDate = itemTemplate.findViewById<TextView>(R.id.tvDate)
@@ -28,6 +29,7 @@ class CallLogAdapter (context: Context, private val callLogs: List<CallLogEntry>
 
         val callLog = callLogs[position]
 
+        //PINTAMOS LOS DATOS EN LA LISTVIEW DEL .XML
         tvNumber.text = callLog.number
         tvType.text = getCallType(callLog.type)
         tvDate.text = DateFormat.getDateInstance().format(Date(callLog.date))
@@ -39,6 +41,7 @@ class CallLogAdapter (context: Context, private val callLogs: List<CallLogEntry>
         return  view
     }
 
+    //CON ESTA FUNCION, OBTENEMOS CADA TIPO DE LLAMADA (ENTRANTE, SALIENTE, PERDIDA)
     private fun getCallType(type: Int): String{
         return when (type){
             CallLog.Calls.INCOMING_TYPE -> "Llamada Recibida"

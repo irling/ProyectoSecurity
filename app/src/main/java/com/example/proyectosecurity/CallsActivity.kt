@@ -33,7 +33,7 @@ class CallsActivity : AppCompatActivity() {
 
     private fun getCallLogs(context: Context): List<CallLogEntry>{
         val callLogList = mutableListOf<CallLogEntry>()
-
+        //
         val cursor = context.contentResolver.query(
             CallLog.Calls.CONTENT_URI,
             null,

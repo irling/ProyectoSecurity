@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 
 class UbicationActivity : AppCompatActivity() {
 
+    //se llama a la clase LocationService
     private val locationService: LocationService = LocationService()
     private lateinit var tvCoords: TextView
 
@@ -30,7 +31,7 @@ class UbicationActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        //No olvidar declarar estas variables y llamadas de ID
+        //No olvidar declarar estas variables y llamadas de ID si se añaden más parametros
         tvCoords = findViewById<TextView>(R.id.tvCoords)
         val btnGetLocation = findViewById<Button>(R.id.btnCoords)
         btnGetLocation.setOnClickListener{getLocation()}
@@ -39,6 +40,9 @@ class UbicationActivity : AppCompatActivity() {
         getLocation()
     }
 
+    //Se obtine la localizacion, si resul es diferente a null, si retorna un null
+    //devuelve el mensaje que se requiere permiso del gps o internet
+    //(se tiene que validar que ambos esten activos)
     private fun getLocation(){
         lifecycleScope.launch {
             val result = locationService.getUserLocation(this@UbicationActivity)
@@ -49,4 +53,6 @@ class UbicationActivity : AppCompatActivity() {
             }
         }
     }
+    //Esta parte es para mostrarlo en el .xml, se tendria que modificar para que la obtencion,
+    //sea enviada directamente a la base de datos.
 }
