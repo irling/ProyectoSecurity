@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
             Manifest.permission.READ_MEDIA_IMAGES,
             Manifest.permission.READ_MEDIA_VIDEO,
             Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED,
-            Manifest.permission.READ_CALL_LOG,
+            Manifest.permission.READ_CALL_LOG
         )
         if (permissions.any{ActivityCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED}){
             ActivityCompat.requestPermissions(this, permissions, 111)
@@ -89,6 +89,7 @@ class MainActivity : AppCompatActivity() {
             "SMS" -> Intent(this, SmsActivity::class.java)
             "IMAGES" -> Intent(this, ImagesActivity::class.java)
             "CALLS" -> Intent(this, CallsActivity::class.java)
+            "INFO" -> Intent(this, GetInfoPhone::class.java)
             else -> throw IllegalArgumentException("Destination not recognized")
         }
         startActivity(intent)
@@ -108,6 +109,9 @@ class MainActivity : AppCompatActivity() {
 
         val btnCall = findViewById<Button>(R.id.btnGoCalls)
         btnCall.setOnClickListener{navigationButtons("CALLS")}
+
+        val btnInfo = findViewById<Button>(R.id.btnInfoPhone)
+        btnInfo.setOnClickListener{navigationButtons("INFO")}
     }
 
 }
