@@ -7,15 +7,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ImagesActivity"
-    android:orientation="vertical"
-    android:background="@color/red_light">
+    android:orientation="vertical">
 
     <ListView
-        android:id="@+id/lvImages"
+        android:id="@+id/encryptedImageListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="8dp"/>
+        android:divider="@android:color/transparent"/>
 
 
 </LinearLayout>

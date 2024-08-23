@@ -1,28 +1,34 @@
 package com.example.proyectosecurity
 
-import ImageAdapter
 import android.app.Activity
 import android.content.ContentUris
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Base64
+import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import java.io.ByteArrayOutputStream
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
+import javax.crypto.spec.SecretKeySpec
 
-//INVESTIGAR LA OBTENCION DE FOTOS ===================================================================================
 
 class ImagesActivity : AppCompatActivity() {
 
-    private val imageByteList = mutableListOf<ByteArray>()
-    private lateinit var secretKey: SecretKey
+    private val imageList = mutableListOf<String>()
+    private lateinit var adapter: ArrayAdapter<String>
+    private lateinit var listView: ListView
 
+    private val encryptionKey = "1234567890123456"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,44 +39,45 @@ class ImagesActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val keyGenerator = KeyGenerator.getInstance("AES")
-        keyGenerator.init(256)
-        secretKey = keyGenerator.generateKey()
-
-        loadImages()
-
-        val listView: ListView = findViewById(R.id.lvImages)
-        val adapter = ImageAdapter(this, imageByteList)
+        listView = findViewById(R.id.encryptedImageListView)
+        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, imageList)
         listView.adapter = adapter
 
+        loadImagesAndEncrypt()
     }
 
-    private fun loadImages() {
-        val projection = arrayOf(MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA)
+    private fun loadImagesAndEncrypt() {
+        val projection = arrayOf(MediaStore.Images.Media.DATA)
         val cursor = contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, null, null, null)
 
-        cursor?.use {
-            val idColumn = it.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
-            val dataColumn = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-
-            while (it.moveToNext()) {
-                val id = it.getLong(idColumn)
-                val data = it.getString(dataColumn)
-                val uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
-
-                // Leer y encriptar la imagen
-                val imageBytes = contentResolver.openInputStream(uri)?.readBytes()
-                imageBytes?.let {
-                    val encryptedBytes = encryptImage(it, secretKey)
-                    imageByteList.add(encryptedBytes)
-                }
+        cursor?.use{
+            val columIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            while (cursor.moveToNext()){
+                val imagePath = cursor.getString(columIndex)
+                val encryptedImagePath = compressAndEncryptImage(imagePath)
+                imageList.add(encryptedImagePath)
             }
         }
+        adapter.notifyDataSetChanged()
     }
 
-    private fun encryptImage(imageBytes: ByteArray, secretKey: SecretKey): ByteArray {
+    private fun compressAndEncryptImage(imagePath: String): String {
+    //cargar la imagen en un bitmap
+        val bitmap = BitmapFactory.decodeFile(imagePath)
+
+        //comprenseion de la imagen en un formato JPED manteniendo el 50% de la calidad
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream)
+        val compressedByte = byteArrayOutputStream.toByteArray()
+
+        //Encriptar los bytes comprimiedos usando AES
+        //val key = "1234567890123456"
+        val secretKeySpec = SecretKeySpec(encryptionKey.toByteArray(), "AES")
         val cipher = Cipher.getInstance("AES")
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey)
-        return cipher.doFinal(imageBytes)
+        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec)
+        val encryptedBytes = cipher.doFinal(compressedByte)
+
+        return Base64.encodeToString(encryptedBytes, Base64.DEFAULT)
     }
+
 }

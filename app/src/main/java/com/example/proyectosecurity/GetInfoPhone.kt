@@ -5,6 +5,7 @@ import android.app.ActivityManager
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.telephony.TelephonyManager
 import android.widget.ArrayAdapter
 import android.widget.ListView
@@ -41,12 +42,14 @@ class GetInfoPhone : AppCompatActivity() {
     private fun getInfoCellPhone (){
         val deviceModel = Build.MODEL
         val telephonyManager = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-        //val imei = telephonyManager.imei
+      //  val imei = telephonyManager.getImei()
 
         val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         val memoryInfo = ActivityManager.MemoryInfo()
         activityManager.getMemoryInfo(memoryInfo)
         val totalRam = memoryInfo.totalMem
+
+        val androidId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
 
         val cpuAbi = Build.SUPPORTED_ABIS.joinToString(", ")
 
@@ -58,7 +61,7 @@ class GetInfoPhone : AppCompatActivity() {
             try {
                 Build.getSerial()
             }catch (e: SecurityException){
-                "Permiso concedido"
+                "No se obtuvo el SN"
             }
         }else{
             Build.SERIAL
@@ -66,7 +69,7 @@ class GetInfoPhone : AppCompatActivity() {
 
         val deviceInfo = listOf(
             "Device Model: $deviceModel",
-            //"IMEI: $imei",
+            "Android ID: $androidId",
             "Total RAM: ${totalRam / (1024 * 1024)} MB",
             "CPU ABI: $cpuAbi",
             "OS Version: $osVersion",
