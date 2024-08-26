@@ -60,7 +60,9 @@ class MainActivity : AppCompatActivity() {
                     break
                 }
             }
-            if (allPermissionsGranted){ }else{
+            if (allPermissionsGranted){
+                Toast.makeText(this, "Todos los permisos concedidos", Toast.LENGTH_SHORT).show()
+            }else{
                 Toast.makeText(this, "Algunos permisos denegados", Toast.LENGTH_SHORT).show()
             }
         }
