@@ -8,6 +8,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.Manifest
+import android.app.admin.DeviceAdminReceiver
+import android.app.admin.DevicePolicyManager
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.widget.Button
@@ -21,6 +25,11 @@ import com.example.proyectosecurity.Location.UbicationActivity
 import com.example.proyectosecurity.Sms.SmsActivity
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        const val REQUEST_CODE_ENABLE_ADMIN = 1
+    }
+
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +40,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        requestAdminDev()
         FuncionalitiesButtons ()
         requestPermissions()
     }
@@ -116,6 +126,14 @@ class MainActivity : AppCompatActivity() {
 
         val btnInfo = findViewById<Button>(R.id.btnInfoPhone)
         btnInfo.setOnClickListener{navigationButtons("INFO")}
+    }
+
+    private fun requestAdminDev (){
+        val componentName = ComponentName(this, MiAdminReciver::class.java)
+        val intent = Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN)
+        intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, componentName)
+        intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "Esta aplicación requiere permisos de administrador para mejorar la seguridad.")
+        startActivityForResult(intent, REQUEST_CODE_ENABLE_ADMIN)
     }
 
 }
