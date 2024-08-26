@@ -1,4 +1,4 @@
-package com.example.proyectosecurity
+package com.example.proyectosecurity.Sms
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -9,8 +9,8 @@ import android.provider.Telephony
 import android.content.ContentResolver
 import android.database.Cursor
 import android.net.Uri
-import android.util.Log
 import android.widget.ListView
+import com.example.proyectosecurity.R
 
 class SmsActivity : AppCompatActivity() {
 

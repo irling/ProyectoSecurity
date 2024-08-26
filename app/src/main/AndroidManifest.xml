@@ -35,23 +35,23 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".GetInfoPhone"
+            android:name=".InfoCellPhone.GetInfoPhone"
             android:exported="false" />
         <activity
-            android:name=".CallsActivity"
+            android:name=".Calls.CallsActivity"
             android:exported="false" />
         <activity
-            android:name=".ImagesActivity"
+            android:name=".Images.ImagesActivity"
             android:exported="false"
             android:theme="@style/Theme.ProyectoSecurity" />
         <activity
-            android:name=".SmsActivity"
+            android:name=".Sms.SmsActivity"
             android:exported="false" />
         <activity
-            android:name=".ContactActivity"
+            android:name=".Contact.ContactActivity"
             android:exported="false" />
         <activity
-            android:name=".UbicationActivity"
+            android:name=".Location.UbicationActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

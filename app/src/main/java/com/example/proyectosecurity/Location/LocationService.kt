@@ -1,4 +1,4 @@
-package com.example.proyectosecurity
+package com.example.proyectosecurity.Location
 
 import android.annotation.SuppressLint
 import android.content.Context

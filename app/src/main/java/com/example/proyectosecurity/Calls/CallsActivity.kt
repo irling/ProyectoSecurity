@@ -1,7 +1,6 @@
-package com.example.proyectosecurity
+package com.example.proyectosecurity.Calls
 
 import android.content.Context
-import android.database.Cursor
 import android.os.Bundle
 import android.provider.CallLog
 import android.provider.ContactsContract
@@ -10,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.proyectosecurity.R
 
 class CallsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

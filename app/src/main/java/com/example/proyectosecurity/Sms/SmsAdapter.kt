@@ -1,4 +1,4 @@
-package com.example.proyectosecurity
+package com.example.proyectosecurity.Sms
 
 import android.content.Context
 import android.view.LayoutInflater

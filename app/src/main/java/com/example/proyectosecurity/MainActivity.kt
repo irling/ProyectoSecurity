@@ -9,12 +9,16 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.Manifest
 import android.content.Intent
-import android.hardware.camera2.TotalCaptureResult
-import android.health.connect.datatypes.ExerciseRoute.Location
 import android.os.Build
 import android.widget.Button
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import com.example.proyectosecurity.Calls.CallsActivity
+import com.example.proyectosecurity.Contact.ContactActivity
+import com.example.proyectosecurity.Images.ImagesActivity
+import com.example.proyectosecurity.InfoCellPhone.GetInfoPhone
+import com.example.proyectosecurity.Location.UbicationActivity
+import com.example.proyectosecurity.Sms.SmsActivity
 
 class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)

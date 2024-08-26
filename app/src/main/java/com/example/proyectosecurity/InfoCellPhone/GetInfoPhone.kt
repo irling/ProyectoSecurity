@@ -1,4 +1,4 @@
-package com.example.proyectosecurity
+package com.example.proyectosecurity.InfoCellPhone
 
 import android.annotation.SuppressLint
 import android.app.ActivityManager
@@ -14,6 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.proyectosecurity.R
 
 class GetInfoPhone : AppCompatActivity() {
 

@@ -9,6 +9,7 @@
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/TitleMainTest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
@@ -30,7 +31,7 @@
         app:layout_constraintBottom_toTopOf="@+id/cvGetSMS"
         app:layout_constraintEnd_toStartOf="@+id/cvGetContact"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@+id/TitleMainTest">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
@@ -71,7 +72,7 @@
         app:layout_constraintBottom_toTopOf="@+id/cvGetGaleria"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cvGetUbi"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@+id/TitleMainTest">
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -107,7 +108,7 @@
         android:layout_height="150dp"
         app:cardBackgroundColor="@color/blue_dark"
         app:cardCornerRadius="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/cvGetGaleriaAnotherThing"
         app:layout_constraintEnd_toStartOf="@+id/cvGetGaleria"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cvGetUbi">
@@ -146,7 +147,7 @@
         android:layout_height="150dp"
         app:cardBackgroundColor="@color/blue_dark"
         app:cardCornerRadius="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/cvGetCalls"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cvGetSMS"
         app:layout_constraintTop_toBottomOf="@+id/cvGetContact">

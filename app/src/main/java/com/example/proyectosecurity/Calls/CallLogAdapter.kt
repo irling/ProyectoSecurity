@@ -1,4 +1,4 @@
-package com.example.proyectosecurity
+package com.example.proyectosecurity.Calls
 
 import android.content.Context
 import android.icu.text.DateFormat
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.example.proyectosecurity.R
 import java.sql.Date
 
 class CallLogAdapter (context: Context, private val callLogs: List<CallLogEntry>)

@@ -1,20 +1,14 @@
-package com.example.proyectosecurity
+package com.example.proyectosecurity.Contact
 
-import android.content.pm.PackageManager
-import android.database.Cursor
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.provider.ContactsContract
-import android.util.Log
 import android.widget.ListView
 import android.widget.SimpleCursorAdapter
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import android.Manifest
-import android.widget.Toast
+import com.example.proyectosecurity.R
 
 class ContactActivity : AppCompatActivity() {
     private lateinit var lvShowContacts: ListView
