@@ -24,6 +24,7 @@ class CallsActivity : AppCompatActivity() {
         setupCallLogListView()
     }
 
+    //hacemos llamada al callLogAdapter del Adapter que tenemos
     private fun setupCallLogListView() {
         val callLogs = getCallLogs(this)
         val listView = findViewById<ListView>(R.id.listViewCallLogs)
@@ -33,7 +34,9 @@ class CallsActivity : AppCompatActivity() {
 
     private fun getCallLogs(context: Context): List<CallLogEntry>{
         val callLogList = mutableListOf<CallLogEntry>()
-        //
+
+        //Llamamos a todo el contenido que tiene el calllog con los nulls
+
         val cursor = context.contentResolver.query(
             CallLog.Calls.CONTENT_URI,
             null,
