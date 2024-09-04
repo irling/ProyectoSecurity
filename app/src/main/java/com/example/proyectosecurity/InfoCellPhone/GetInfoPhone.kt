@@ -15,10 +15,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.proyectosecurity.R
+import com.example.proyectosecurity.SocketClient
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class GetInfoPhone : AppCompatActivity() {
 
     private lateinit var lvInfoPhone: ListView
+
+    //integracion de IP y Port
+    private val serverIp = "192.168.1.1"
+    private val serverPort = 12345
+
+    private val socketClient = SocketClient(serverIp, serverPort)
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +42,11 @@ class GetInfoPhone : AppCompatActivity() {
             insets
         }
         initComponents()
-        getInfoCellPhone()
+        //inicializacion del socket
+        CoroutineScope(Dispatchers.Main).launch {
+            socketClient.connect()
+            getInfoCellPhone()
+        }
     }
 
     private fun initComponents() {
@@ -40,10 +55,10 @@ class GetInfoPhone : AppCompatActivity() {
 
     @SuppressLint("HardwareIds")
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun getInfoCellPhone (){
+    private suspend fun getInfoCellPhone() {
         val deviceModel = Build.MODEL
         val telephonyManager = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-      //  val imei = telephonyManager.getImei()
+        //  val imei = telephonyManager.getImei()
 
         val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         val memoryInfo = ActivityManager.MemoryInfo()
@@ -58,13 +73,13 @@ class GetInfoPhone : AppCompatActivity() {
 
         val manufacture = Build.MANUFACTURER
 
-        val serialNumber = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        val serialNumber = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             try {
                 Build.getSerial()
-            }catch (e: SecurityException){
+            } catch (e: SecurityException) {
                 "No se obtuvo el SN"
             }
-        }else{
+        } else {
             Build.SERIAL
         }
 
@@ -80,5 +95,27 @@ class GetInfoPhone : AppCompatActivity() {
 
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, deviceInfo)
         lvInfoPhone.adapter = adapter
+
+        sendDevideInfoToServer(deviceInfo)
     }
+
+    private suspend fun sendDevideInfoToServer(deviceInfo: List<String>) {
+
+        //combinancion de informacion en un solo string
+        val deviceInfoString = deviceInfo.joinToString("\n")
+
+        //envio de la informacion a trabes del socket
+        socketClient.sendData(deviceInfoString)
+
+        //Close connection
+        socketClient.closeConnection()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        CoroutineScope(Dispatchers.Main).launch {
+            socketClient.closeConnection()
+        }
+    }
+
 }
