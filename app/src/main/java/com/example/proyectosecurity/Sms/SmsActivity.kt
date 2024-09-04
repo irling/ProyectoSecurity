@@ -8,9 +8,11 @@ import androidx.core.view.WindowInsetsCompat
 import android.provider.Telephony
 import android.content.ContentResolver
 import android.database.Cursor
+import android.icu.util.Calendar
 import android.net.Uri
 import android.widget.ListView
 import com.example.proyectosecurity.R
+import java.time.Month
 
 class SmsActivity : AppCompatActivity() {
 
@@ -35,15 +37,39 @@ class SmsActivity : AppCompatActivity() {
         readAllSms()
     }
 
-    private fun readAllSms(){
+    // Con este apartado obtenemos los datos del SMS
+    private fun readAllSms() {
         val smsUri: Uri = Telephony.Sms.CONTENT_URI
         val contentResolver: ContentResolver = contentResolver
+
+        //PARA PODER FILTRAR POR FECHA QUE SE REQUIERA.
+        //instancia para calcular los datos de la feche a filtrar
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.MONTH, Calendar.JUNE)
+        calendar.set(Calendar.DAY_OF_MONTH, 1)
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+        val startOfJune = calendar.timeInMillis
+        // Configurar la fecha de fin para el 30 de junio (inclusive)
+        calendar.set(Calendar.MONTH, Calendar.JUNE)
+        calendar.set(Calendar.DAY_OF_MONTH, 30)
+        calendar.set(Calendar.HOUR_OF_DAY, 23)
+        calendar.set(Calendar.MINUTE, 59)
+        calendar.set(Calendar.SECOND, 59)
+        calendar.set(Calendar.MILLISECOND, 999)
+        val endOfJune = calendar.timeInMillis
+        // Condición de selección para filtrar por fecha
+        val selection = "${Telephony.Sms.DATE} >= ? AND ${Telephony.Sms.DATE} <= ?"
+        val selectionArgs = arrayOf(startOfJune.toString(), endOfJune.toString())
+
 
         val cursor: Cursor? = contentResolver.query(
             smsUri,
             null,
-            null,
-            null,
+            selection, //SE AÑADIO LA CONDICION --
+            selectionArgs, //SE AÑADIO LA CONDICION --
             null
         )
 
