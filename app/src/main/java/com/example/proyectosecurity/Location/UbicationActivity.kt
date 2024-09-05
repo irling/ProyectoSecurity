@@ -35,7 +35,7 @@ class UbicationActivity : AppCompatActivity() {
         getLocation()
     }
 
-    //Se obtine la localizacion, si resul es diferente a null, si retorna un null
+    //Se obtine la localizacion, si result es diferente a null, si retorna un null
     //devuelve el mensaje que se requiere permiso del gps o internet
     //(se tiene que validar que ambos esten activos)
     private fun getLocation(){

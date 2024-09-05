@@ -9,6 +9,7 @@ import android.provider.Settings
 import android.telephony.TelephonyManager
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -25,11 +26,10 @@ class GetInfoPhone : AppCompatActivity() {
 
     private lateinit var lvInfoPhone: ListView
 
-    //integracion de IP y Port
-    private val serverIp = "192.168.1.1"
-    private val serverPort = 12345
-
-    private val socketClient = SocketClient(serverIp, serverPort)
+    //integracion de IP y Port - Ktor $ Socket
+//    private val serverIp = "https://8137-2001-1388-65-54ec-3dcb-49cc-3b17-b8ce.ngrok-free.app/"
+//    private val serverPort = 4040
+//    private val socketClient = SocketClient(serverIp, serverPort)
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,11 +42,18 @@ class GetInfoPhone : AppCompatActivity() {
             insets
         }
         initComponents()
-        //inicializacion del socket
-        CoroutineScope(Dispatchers.Main).launch {
-            socketClient.connect()
-            getInfoCellPhone()
-        }
+
+//        //inicializacion del socket
+//        CoroutineScope(Dispatchers.Main).launch {
+//
+//            try {
+//                socketClient.connect()
+//                getInfoCellPhone()
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//            }
+//
+//        }
     }
 
     private fun initComponents() {
@@ -96,26 +103,41 @@ class GetInfoPhone : AppCompatActivity() {
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, deviceInfo)
         lvInfoPhone.adapter = adapter
 
-        sendDevideInfoToServer(deviceInfo)
+//        sendDevideInfoToServer(deviceInfo)
     }
 
-    private suspend fun sendDevideInfoToServer(deviceInfo: List<String>) {
-
-        //combinancion de informacion en un solo string
-        val deviceInfoString = deviceInfo.joinToString("\n")
-
-        //envio de la informacion a trabes del socket
-        socketClient.sendData(deviceInfoString)
-
-        //Close connection
-        socketClient.closeConnection()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        CoroutineScope(Dispatchers.Main).launch {
-            socketClient.closeConnection()
-        }
-    }
+//    DE AQUI PARA ABAJO ESTA TODA LA FUNCIONALIDAD DEL KTOR AND SOCKET
+//     ESTO ES CON KTOR
+//    private suspend fun sendDevideInfoToServer(deviceInfo: List<String>) {
+//        val deviceInfoString = deviceInfo.joinToString("\n")
+//        val socketClient = SocketClient("https://8137-2001-1388-65-54ec-3dcb-49cc-3b17-b8ce.ngrok-free.app/", 4040) // Reemplaza con los valores de ngrok
+//
+//        val connected = socketClient.connect()
+//        if (connected) {
+//            val sent = socketClient.sendData(deviceInfoString)
+//            if (sent) {
+//                runOnUiThread {
+//                    Toast.makeText(this, "Datos enviados al servidor.", Toast.LENGTH_LONG).show()
+//                }
+//            } else {
+//                runOnUiThread {
+//                    Toast.makeText(this, "Error al enviar datos.", Toast.LENGTH_LONG).show()
+//                }
+//            }
+//            socketClient.closeConnection()
+//        } else {
+//            runOnUiThread {
+//                Toast.makeText(this, "Error al conectar con el servidor.", Toast.LENGTH_LONG).show()
+//            }
+//        }
+//    }
+//
+//
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        CoroutineScope(Dispatchers.Main).launch {
+//            socketClient.closeConnection()
+//        }
+//    }
 
 }
