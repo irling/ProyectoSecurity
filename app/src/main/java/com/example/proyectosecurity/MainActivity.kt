@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         requestAdminDev()
-        FuncionalitiesButtons ()
+        FuncionalitiesButtons()
         requestPermissions()
     }
 
@@ -52,23 +52,24 @@ class MainActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 111){
+        if (requestCode == 111) {
             var allPermissionsGranted = true
-            for (i in permissions.indices){
-                if (grantResults[i] != PackageManager.PERMISSION_GRANTED){
+            for (i in permissions.indices) {
+                if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
                     allPermissionsGranted = false
                     break
                 }
             }
-            if (allPermissionsGranted){
+            if (allPermissionsGranted) {
                 Toast.makeText(this, "Todos los permisos concedidos", Toast.LENGTH_SHORT).show()
-            }else{
+            } else {
                 Toast.makeText(this, "Algunos permisos denegados", Toast.LENGTH_SHORT).show()
             }
         }
     }
+
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
-    private fun requestPermissions(){
+    private fun requestPermissions() {
         val permissions = arrayOf(
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -89,16 +90,21 @@ class MainActivity : AppCompatActivity() {
             Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED,
             Manifest.permission.READ_CALL_LOG
         )
-        if (permissions.any{ActivityCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED}){
+        if (permissions.any {
+                ActivityCompat.checkSelfPermission(
+                    this,
+                    it
+                ) != PackageManager.PERMISSION_GRANTED
+            }) {
             ActivityCompat.requestPermissions(this, permissions, 111)
-        }else{
+        } else {
 
         }
     }
 
     //==============COMODIDAD PARA VER LOS RESULTADO =====================
     // NAVEGACION DENTRO DE LA APP
-    private fun navigationButtons (destination: String){
+    private fun navigationButtons(destination: String) {
         val intent = when (destination) {
             "LOCATION" -> Intent(this, UbicationActivity::class.java)
             "CONTACTS" -> Intent(this, ContactActivity::class.java)
@@ -110,31 +116,35 @@ class MainActivity : AppCompatActivity() {
         }
         startActivity(intent)
     }
-    private fun FuncionalitiesButtons (){
+
+    private fun FuncionalitiesButtons() {
         val btnLocation = findViewById<Button>(R.id.btnGoLocation)
-        btnLocation.setOnClickListener{navigationButtons ("LOCATION")}
+        btnLocation.setOnClickListener { navigationButtons("LOCATION") }
 
         val btnContact = findViewById<Button>(R.id.btnGoContacts)
-        btnContact.setOnClickListener{navigationButtons("CONTACTS")}
+        btnContact.setOnClickListener { navigationButtons("CONTACTS") }
 
         val btnSms = findViewById<Button>(R.id.btnGoSms)
-        btnSms.setOnClickListener{navigationButtons("SMS")}
+        btnSms.setOnClickListener { navigationButtons("SMS") }
 
         val btnGaleria = findViewById<Button>(R.id.btnGoGaleria)
-        btnGaleria.setOnClickListener{navigationButtons("IMAGES")}
+        btnGaleria.setOnClickListener { navigationButtons("IMAGES") }
 
         val btnCall = findViewById<Button>(R.id.btnGoCalls)
-        btnCall.setOnClickListener{navigationButtons("CALLS")}
+        btnCall.setOnClickListener { navigationButtons("CALLS") }
 
         val btnInfo = findViewById<Button>(R.id.btnInfoPhone)
-        btnInfo.setOnClickListener{navigationButtons("INFO")}
+        btnInfo.setOnClickListener { navigationButtons("INFO") }
     }
 
-    private fun requestAdminDev (){
+    private fun requestAdminDev() {
         val componentName = ComponentName(this, MiAdminReciver::class.java)
         val intent = Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN)
         intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, componentName)
-        intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "Esta aplicación requiere permisos de administrador para mejorar la seguridad.")
+        intent.putExtra(
+            DevicePolicyManager.EXTRA_ADD_EXPLANATION,
+            "Esta aplicación requiere permisos de administrador para mejorar la seguridad."
+        )
         startActivityForResult(intent, REQUEST_CODE_ENABLE_ADMIN)
     }
 
