@@ -42,6 +42,7 @@ class GetInfoPhone : AppCompatActivity() {
             insets
         }
         initComponents()
+        getInfoCellPhone()
 
 //        //inicializacion del socket
 //        CoroutineScope(Dispatchers.Main).launch {
@@ -62,7 +63,7 @@ class GetInfoPhone : AppCompatActivity() {
 
     @SuppressLint("HardwareIds")
     @RequiresApi(Build.VERSION_CODES.O)
-    private suspend fun getInfoCellPhone() {
+    private fun getInfoCellPhone() {
         val deviceModel = Build.MODEL
         val telephonyManager = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         //  val imei = telephonyManager.getImei()
