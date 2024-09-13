@@ -32,7 +32,7 @@ class UbicationActivity : AppCompatActivity() {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var apiService: ApiService
-    private val originU = "https://f5de-2001-1388-65-74bf-258e-b27f-5487-2113.ngrok-free.app/"
+    private val originU = "https://3dfa-2001-1388-65-870d-50d0-d596-358e-132c.ngrok-free.app"
     private val REQUEST_CODE = 101
 
     //se llama a la clase LocationService
@@ -85,6 +85,8 @@ class UbicationActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             val result = locationService.getUserLocation(this@UbicationActivity)
+            Log.e("LocationUbi", "Location ${result}")
+
             if (result != null) {
                 tvCoords.text = "Latitude y Longitud: ${result.latitude} ${result.longitude} "
                 sendLocationToServer(result)
@@ -107,6 +109,7 @@ class UbicationActivity : AppCompatActivity() {
                 )
 
                 val resp = apiService.sendLocation(locationRequest)
+                Log.e("Location", "$resp")
 
                 if (resp.isSuccessful) {
                     val locationResponse = resp.body()
