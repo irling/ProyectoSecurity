@@ -146,7 +146,7 @@ class GetInfoPhone() : AppCompatActivity() {
         val client = OkHttpClient()
         val request = Request.Builder().url(originU).build()
 
-        Log.e("Location", "Config socket!!!!!!!!!!!!!!!!!!!")
+        Log.e("Device", "Config socket!!!!!!!!!!!!!!!!!!!")
         try {
             // val webSocket =
             client.newWebSocket(request, object : WebSocketListener() {
@@ -154,9 +154,9 @@ class GetInfoPhone() : AppCompatActivity() {
                 override fun onMessage(webSocket: WebSocket, text: String) {
 
                     if (text == "GetDeviceInfo") {
-                        val deviceInfo = getInfoCellPhone()
+                        val DeviceInfo = getInfoCellPhone()
 
-                        val json = Gson().toJson(deviceInfo)
+                        val json = Gson().toJson(DeviceInfo)
 
                         webSocket.send(json)
 

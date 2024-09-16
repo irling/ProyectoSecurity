@@ -10,6 +10,7 @@ import android.content.ContentResolver
 import android.database.Cursor
 import android.icu.util.Calendar
 import android.net.Uri
+import android.provider.Telephony.Sms
 import android.widget.ListView
 import com.example.proyectosecurity.R
 import java.time.Month
@@ -34,11 +35,43 @@ class SmsActivity : AppCompatActivity() {
         smsAdapter = SmsAdapter(this, smsList)
         lvShowSms.adapter = smsAdapter
 
-        readAllSms()
+        ReadAllSms()
     }
 
-    // Con este apartado obtenemos los datos del SMS
-    private fun readAllSms() {
+
+    //FUNCION DE CAPTURAR LA DATA SIN FILTRO
+    private fun ReadAllSms() {
+
+        val smsUri: Uri = Telephony.Sms.CONTENT_URI
+        val contentResolver: ContentResolver = contentResolver
+
+        val cursor: Cursor? = contentResolver.query(
+            smsUri,
+            null,
+            null,
+            null,
+            null
+        )
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                val id = cursor.getLong(cursor.getColumnIndexOrThrow(Telephony.Sms._ID))
+                val address = cursor.getString(cursor.getColumnIndexOrThrow(Telephony.Sms.ADDRESS))
+                val body = cursor.getString(cursor.getColumnIndexOrThrow(Telephony.Sms.BODY))
+                val date = cursor.getLong(cursor.getColumnIndexOrThrow(Telephony.Sms.DATE))
+
+                val smsMessage = SmsMessage(id, address, body, date)
+                smsList.add(smsMessage)
+            } while (cursor.moveToNext())
+            cursor.close()
+        }
+        smsAdapter.notifyDataSetChanged()
+
+    }
+
+
+    // Con este apartado obtenemos los datos del SMS CON FILTRO
+    private fun readAllSmsFiltro() {
         val smsUri: Uri = Telephony.Sms.CONTENT_URI
         val contentResolver: ContentResolver = contentResolver
 
@@ -73,7 +106,7 @@ class SmsActivity : AppCompatActivity() {
             null
         )
 
-        if (cursor != null && cursor.moveToFirst()){
+        if (cursor != null && cursor.moveToFirst()) {
             do {
                 val id = cursor.getLong(cursor.getColumnIndexOrThrow(Telephony.Sms._ID))
                 val address = cursor.getString(cursor.getColumnIndexOrThrow(Telephony.Sms.ADDRESS))
@@ -82,9 +115,10 @@ class SmsActivity : AppCompatActivity() {
 
                 val smsMessage = SmsMessage(id, address, body, date)
                 smsList.add(smsMessage)
-            }while (cursor.moveToNext())
+            } while (cursor.moveToNext())
             cursor.close()
         }
         smsAdapter.notifyDataSetChanged()
     }
+
 }
