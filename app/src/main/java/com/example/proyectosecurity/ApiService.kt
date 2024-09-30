@@ -9,7 +9,7 @@ interface ApiService {
     @POST("/v1/api/location/send")
     suspend fun sendLocation(@Body locationRequest: LocationRequest): Response<LocationResponse>;
 
-    //CAMBIAR RUTA CUANDO SEA NECESARIO.
+    //CAMBIAR RUTAS CUANDO SEA NECESARIO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!.
     @POST("/v1/api/devices/send")
     suspend fun sendDeviceInfo(@Body deviceInfoRequest: DeviceInfoRequest): Response<DeviceResponse>
 
@@ -17,7 +17,7 @@ interface ApiService {
     suspend fun sendContactInfo(@Body contactInfoRequest: List<ContactInfoRequest>): Response<ContactResponse>
 
     @POST("/v1/api/sms/send")
-    suspend fun sendSMSInfo(@Body smsInfoRequest: SMSInfoRequest): Response<SMSResponse>
+    suspend fun sendSMSInfo(@Body smsInfoRequest: List<SMSInfoRequest>): Response<SMSResponse>
 
 }
 //LOCATION DATA CLASSS=========
